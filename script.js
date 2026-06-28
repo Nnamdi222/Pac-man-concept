@@ -59,19 +59,48 @@ function draw() {
     for (let c=0;c<COLS;c++){
       const v = map[r][c];
       const x = c*TILE, y=r*TILE;
-      if (v===1){ ctx.fillStyle='#222'; ctx.fillRect(x,y,TILE,TILE); }
-      if (v===2){ ctx.fillStyle='#ffd'; ctx.beginPath(); ctx.arc(x+TILE/2,y+TILE/2,2.5,0,Math.PI*2); ctx.fill(); }
-      if (v===3){ ctx.fillStyle='#ff9'; ctx.beginPath(); ctx.arc(x+TILE/2,y+TILE/2,6,0,Math.PI*2); ctx.fill(); }
+      if (v===1){ ctx.fillStyle='#071426'; ctx.fillRect(x,y,TILE,TILE); }
+      if (v===2){ ctx.fillStyle='#e8f7ff'; ctx.beginPath(); ctx.arc(x+TILE/2,y+TILE/2,2.5,0,Math.PI*2); ctx.fill(); ctx.fillStyle='rgba(232,247,255,0.08)'; ctx.fillRect(x+TILE/2-1,y+TILE/2-1,2,2); }
+      if (v===3){ ctx.fillStyle='#fff8b0'; ctx.beginPath(); ctx.arc(x+TILE/2,y+TILE/2,6,0,Math.PI*2); ctx.fill(); ctx.shadowColor='rgba(255,200,80,0.6)'; ctx.shadowBlur=8; ctx.shadowOffsetX=0; ctx.shadowOffsetY=0; ctx.fill(); ctx.shadowBlur=0; }
     }
   }
-  // draw player
-  ctx.fillStyle = '#ffcc00';
-  ctx.beginPath(); ctx.arc(player.x*TILE+TILE/2, player.y*TILE+TILE/2, TILE*0.4, 0, Math.PI*2); ctx.fill();
+  // draw player as spaceship
+  const px = player.x*TILE+TILE/2, py = player.y*TILE+TILE/2;
+  const angle = getPlayerAngle();
+  ctx.save();
+  ctx.translate(px,py);
+  ctx.rotate(angle);
+  // ship body
+  ctx.fillStyle = '#ffd24d';
+  ctx.beginPath();
+  ctx.moveTo(TILE*0.5,0);
+  ctx.lineTo(-TILE*0.35,TILE*0.25);
+  ctx.lineTo(-TILE*0.35,-TILE*0.25);
+  ctx.closePath();
+  ctx.fill();
+  // thruster
+  ctx.fillStyle = '#ff6a1a';
+  ctx.beginPath(); ctx.moveTo(-TILE*0.35, -TILE*0.1); ctx.lineTo(-TILE*0.6,0); ctx.lineTo(-TILE*0.35, TILE*0.1); ctx.closePath(); ctx.fill();
+  ctx.restore();
   // draw ghosts
   ghosts.forEach(g=>{
-    ctx.fillStyle = g.mode==='frightened' ? '#88f' : g.color;
-    ctx.beginPath(); ctx.arc(g.x*TILE+TILE/2, g.y*TILE+TILE/2, TILE*0.4, 0, Math.PI*2); ctx.fill();
+    const gx = g.x*TILE+TILE/2, gy = g.y*TILE+TILE/2;
+    // UFO-style enemy
+    ctx.save();
+    ctx.translate(gx,gy);
+    ctx.fillStyle = g.mode==='frightened' ? '#89a3ff' : g.color;
+    ctx.beginPath(); ctx.ellipse(0,0,TILE*0.38,TILE*0.22,0,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,0.12)'; ctx.beginPath(); ctx.ellipse(0,-TILE*0.06,TILE*0.18,TILE*0.08,0,0,Math.PI*2); ctx.fill();
+    ctx.restore();
   });
+}
+
+function getPlayerAngle(){
+  if (player.dir===DIR.LEFT) return Math.PI;
+  if (player.dir===DIR.RIGHT) return 0;
+  if (player.dir===DIR.UP) return -Math.PI/2;
+  if (player.dir===DIR.DOWN) return Math.PI/2;
+  return 0;
 }
 
 function canMove(x,y){

@@ -1,10 +1,16 @@
 * { box-sizing: border-box; }
-body { font-family: system-ui, Arial, sans-serif; background: #000; color: #fff; margin:0; padding:0; display:flex; align-items:center; justify-content:center; height:100vh; }
-.container { text-align:center; }
-h1 { margin:8px 0 4px; font-size:24px; }
-.hud { display:flex; gap:16px; justify-content:center; margin-bottom:8px; }
-#game { background:#000; display:block; border:6px solid #111; box-shadow: 0 6px 18px rgba(0,0,0,0.6); }
-.controls { margin-top:8px; color:#ddd; font-size:13px; }
-#restart { margin-top:8px; padding:8px 12px; border-radius:6px; background:#ffcc00; border:0; cursor:pointer; }
-#message { color:#ff6; min-width:180px; }
-.pellet { width:6px; height:6px; background:#ffd; border-radius:50%; }
+body { font-family: system-ui, Arial, sans-serif; margin:0; padding:0; display:flex; align-items:center; justify-content:center; height:100vh; color:#e6f7ff; background:#000; }
+.container { text-align:center; z-index:2; position:relative; }
+h1 { margin:8px 0 4px; font-size:26px; color:#9be7ff; text-shadow:0 2px 10px rgba(0,160,255,0.25); }
+.hud { display:flex; gap:18px; justify-content:center; margin-bottom:8px; color:#cfeeff; }
+#game { background:linear-gradient(180deg,#001224 0%, #000 100%); display:block; border:6px solid rgba(10,25,40,0.9); box-shadow: 0 8px 30px rgba(0,0,0,0.8), 0 0 40px rgba(0,120,255,0.06) inset; }
+.controls { margin-top:8px; color:#bcd; font-size:13px; }
+#restart { margin-top:8px; padding:8px 12px; border-radius:6px; background:#18a0ff; color:#001; border:0; cursor:pointer; box-shadow:0 4px 10px rgba(24,160,255,0.12); }
+#message { color:#ffd; min-width:180px; }
+
+/* Starfield effect */
+body::before{ content:''; position:fixed; inset:0; background-image: radial-gradient(#fff 1px, transparent 1px), radial-gradient(#fff 1px, transparent 1px); background-size: 200px 200px, 400px 400px; opacity:0.6; mix-blend-mode:screen; pointer-events:none; animation: twinkle 8s linear infinite; }
+@keyframes twinkle{ 0%{opacity:0.45}50%{opacity:0.9}100%{opacity:0.45} }
+
+/* pellets as stars */
+.pellet { width:6px; height:6px; background:linear-gradient(#fff,#ffd); border-radius:50%; box-shadow:0 0 6px rgba(255,255,220,0.9); }
