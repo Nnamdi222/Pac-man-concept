@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pac-Run — A Pac‑Man Inspired Game</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Pac-Run</h1>
+      <div class="hud">
+        <div>Score: <span id="score">0</span></div>
+        <div>Lives: <span id="lives">3</span></div>
+        <div id="message"></div>
+      </div>
+      <canvas id="game" width="560" height="620"></canvas>
+      <div class="controls">Use arrow keys to move. Eat pellets. Get power-ups!</div>
+      <button id="restart">Restart</button>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
